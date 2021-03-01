@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+option go_package = "github.com/Ivanhahanov/grpcFlags";
+package flags;
+
+service Flags{
+  rpc CheckFlag(CheckFlagRequest) returns (CheckFlagResult);
+  rpc ServiceRegister(ServiceRegisterRequest) returns (ServiceRegisterResponse);
+  rpc UserRegister(UserRegisterRequest) returns (UserRegisterResponse);
+  rpc GetKey(GetKeyRequest) returns (GetKeyResponse);
+  rpc ListOfUsers(Admin) returns (stream Users);
+}
+
+message CheckFlagRequest {
+  bytes flag = 2;
+  string service = 3;
+}
+
+message CheckFlagResult {
+  bool status = 1;
+}
+
+message ServiceRegisterRequest {
+  string key = 1;
+  string service = 2;
+}
+
+message ServiceRegisterResponse {
+  bytes flag = 1;
+}
+
+message UserRegisterRequest {
+  string username = 1;
+  string team = 2;
+  string password = 3;
+}
+
+message UserRegisterResponse {
+  string username = 1;
+  string team = 2;
+}
+
+message GetKeyRequest {
+  string username = 1;
+  string password = 2;
+}
+
+message GetKeyResponse {
+  string key = 1;
+}
+
+message Admin {
+  string username = 1;
+  string password = 2;
+}
+
+message Users {
+  string username = 1;
+  string team = 2;
+  repeated Service services = 3;
+}
+
+message Service {
+  string name = 1;
+  bool status = 2;
+}
